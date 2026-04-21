@@ -38,6 +38,66 @@
             top: 0;
             z-index: 1000;
             box-shadow: var(--shadow);
+            transition: padding 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .header-brand {
+            text-align: center;
+            transition: display 0.3s ease, align-items 0.3s ease, gap 0.3s ease;
+        }
+
+        .header-logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            margin: 5px 0;
+            letter-spacing: 1px;
+            transition: font-size 0.3s ease, margin 0.3s ease;
+        }
+
+        .header-year {
+            font-size: 1.2rem;
+            margin: 0;
+            opacity: 0.95;
+            transition: font-size 0.3s ease;
+        }
+
+        header.header-shrink {
+            padding: 12px 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header.header-shrink .header-logo {
+            width: 46px;
+            height: 46px;
+        }
+
+        header.header-shrink .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        header.header-shrink .header-title {
+            font-size: 1.8rem;
+            margin: 2px 0;
+        }
+
+        header.header-shrink .header-year {
+            font-size: 1.8rem;
         }
 
         .search-container {
@@ -48,6 +108,17 @@
             box-shadow: var(--shadow);
             display: flex;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            transition: top 0.3s ease, padding 0.3s ease, margin 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .search-container.search-shrink {
+            padding: 10px 14px;
+            margin: 6px 10px;
+            border-radius: 22px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
         }
 
         #searchInput {
@@ -189,21 +260,21 @@
 
 <body>
 
-    <header>
-        <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
+    <header id="pageHeader">
+        <div class="header-inner">
 
-            <div style="text-align: center;">
+            <div class="header-brand">
                 <img src="./Assets/Images/brasao_serrinha_bg_transparente.png" alt="Brasão de Serrinha"
-                    style="width: 70px; height: 70px; object-fit: contain;">
-                <h1 style="font-size: 2.5rem; margin: 5px 0; letter-spacing: 1px;">Mês Mariano</h1>
-                <p style="font-size: 1.2rem; margin: 0; opacity: 0.95;">2026</p>
+                    class="header-logo">
+                <h1 class="header-title">Mês Mariano</h1>
+                <p class="header-year">2026</p>
             </div>
 
         </div>
     </header>
 
     <div class="schedule-container">
-        <div class="search-container">
+        <div class="search-container" id="searchContainer">
             <input type="text" id="searchInput" placeholder="Pesquisar nome ou data" onkeyup="filterContent()">
         </div>
 
@@ -231,7 +302,7 @@
             { data: "04/05", dia_semana: "Segunda-feira", titulo: "Nossa Senhora do Desterro", img: "./Assets/Images/3.png", nomes: ["Denílson Pereira Barbalho e família", "José Carlos da Rocha e família", "Orlando Augusto de Lima e família", "Maria de Lourdes da Silva e família"] },
             { data: "05/05", dia_semana: "Terça-feira", titulo: "Nossa Senhora das Neves", img: "./Assets/Images/4.png", nomes: ["Irene Gomes da Rocha e família", "Antônio Nunes da Rocha e família", "Alex Rodrigues de Araujo e família", "Damião Gomes de Meio e família", "João Antônio Lopes Barbosa e família", "Terezinha Rodrigues de Araújo e família", "Maria José Dias e família"] },
             { data: "06/05", dia_semana: "Quarta-feira", titulo: "Nossa Senhora do Amparo", img: "./Assets/Images/5.png", nomes: ["In Memoriam Dona Finha", "Carlos Antônio de Aguiar e família", "Pedro Henrique da Silva Santos e família", "Pedro Henrique da Silva Castro e família", "Gilson de Aguiar e família", "Rafael Francelino de Aguiar Neto e família", "Luiz Antônio Venceslau e família", "Izolda Maria de Oliveira de Aguiar e família", "Reginaldo Vitor de Oliveira Aguiar e família"] },
-            { data: "07/05", dia_semana: "Quinta-feira", titulo: "Nossa Senhora do Rosário", img: "./Assets/Images/6.png", nomes: ["Geraldo Elias da Silva e família", "Francisco Rodrigues da Silva e família", "Marinaldo Amâncio da Silva e família", "João Apolinário da Silva e família", "Nazaré Paulino da Silva e família", "Francisco Pedro de Oliveira e família", "Maria das Dores Gomes e família", "Fernando Silva Santiago e família", "Ricardo Francelino de Aguiar e família", "Henrique Arllyan Medeiros Santos e família", "Patricio Júnior de Oliveira e família"] },
+            { data: "07/05", dia_semana: "Quinta-feira", titulo: "Nossa Senhora do Rosário", img: "./Assets/Images/6.png", nomes: ["Geraldo Elias da Silva e família", "Francisco Rodrigues da Silva e família", "Marinaldo Amâncio da Silva e família", "João Apolinário da Silva e família", "Nazaré Paulino da Silva e família", "Francisco Pedro de Oliveira e família", "Maria das Dores Gomes e família", "Fernando Silva Santiago e família", "Ricardo Francelino de Aguiar e família", "Henrique Allyan Medeiros Santos e família", "Patricio Júnior de Oliveira e família"] },
             { data: "08/05", dia_semana: "Sexta-feira", titulo: "Nossa Senhora da Conceição", img: "./Assets/Images/7.png", nomes: ["Severino Gomes Sobrinho e família", "Avanir Farias Do Nascimento e família", "Maria Lúcia Gomes de Pontes", "Maria Cicera da Silva e família", "Aliete Rodrigues do Nascimento e família", "José Heleno do Nascimento e família", "Otacílio Gomes de Assis", "Maria Lucinete de Lima da Silva e família", "Jair Farias Gomes e Família", "Suzana José da Silva", "Reginaldo Gomes de Pontes", "Ricardo Gomes de Pontes", "José Francisco Balbino da Silva", "Lucineide Cândido Fernandes da Silva", "Fafá Lima e família", "José Edilson e Família", "Jailson e Família", "Anderson e família", "Noca e família", "Carlos André e família", "Raqueline e família"] },
             { data: "09/05", dia_semana: "Sábado", titulo: "Nossa Senhora da Penha", img: "./Assets/Images/8.jpg", nomes: ["Maria de Jesus Paiva Arruda e família", "Maria de Fátima Paiva Arruda", "Ruy Arruda Cassiano Da Silva", "Maria de Deus Paiva Gomes e família", "Jessanda Paiva Arruda e família", "Michel Rodrigo Nunes Arruda e família", "Kenia Stephanie Nunes Arruda e família", "Elisabeth Paiva Gomes e família", "João de Deus Paiva Arruda e família", "Maria Isabel Paiva Gomes e família", "José Olimpio Paiva Arruda e família", "Ciro Rian de Melo e família", "Edosn Ribeiro Gomes Júnior e família", "Maria de Fátima Nunes Arruda"] },
             { data: "10/05", dia_semana: "Domingo", titulo: "Natividade de Nossa Senhora", img: "./Assets/Images/9.jpg", nomes: ["Dia das Mães", "Pastoral Familiar", "ECC", "Pastoral do Dízimo", "Dizimistas e famílias"] },
@@ -305,7 +376,20 @@
             document.getElementById('noResults').style.display = found ? "none" : "block";
         }
 
+        function handleHeaderScroll() {
+            const header = document.getElementById('pageHeader');
+            const searchContainer = document.getElementById('searchContainer');
+            const isShrunk = window.scrollY > 50;
+
+            header.classList.toggle('header-shrink', isShrunk);
+            searchContainer.classList.toggle('search-shrink', isShrunk);
+            searchContainer.style.top = `${header.offsetHeight + 8}px`;
+        }
+
         render();
+        handleHeaderScroll();
+        window.addEventListener('scroll', handleHeaderScroll);
+        window.addEventListener('resize', handleHeaderScroll);
     </script>
 
 </body>
