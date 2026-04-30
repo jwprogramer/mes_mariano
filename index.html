@@ -255,6 +255,27 @@
             font-size: 0.8rem;
             color: #666;
         }
+
+        .print-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 9px 22px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+            white-space: nowrap;
+            margin-top: 12px;
+        }
+
+        .print-btn:hover {
+            background: var(--secondary-blue);
+        }
+
     </style>
 </head>
 
@@ -292,11 +313,14 @@
             <div>Desenvolvido por </div>
             <div><img src="./Assets/Images/LOGOPASCOM2.png" alt="Logo PASCOM" style="width: 40px; height: 40px;"></div>
         </div>
+        <button class="print-btn" onclick="printSchedule()" title="Imprimir programação">
+            🖨️ Imprimir Programação
+        </button>
     </footer>
 
     <script>
         const programacao = [
-            { data: "01/05", dia_semana: "Sexta-feira", titulo: "Abertura", img: null, nomes: ["Todas as Pastorais e Comunidades"] },
+            { data: "01/05", dia_semana: "Sexta-feira", titulo: "Abertura", img: null, nomes: ["Todas as Pastorais, Movimentos e Comunidades"] },
             { data: "02/05", dia_semana: "Sábado", titulo: "Nossa Senhora da Luz", img: "./Assets/Images/1.png", nomes: ["Eduardo Apolinário da Silva e família", "Valdomira Apolinário da Silva e família", "José Lucivaldo da Silva e família", "Ligia Feliciano da Silva e família", "Floriano de Lima e família", "Alzira Lopes de Mendonça e família"] },
             { data: "03/05", dia_semana: "Domingo", titulo: "Nossa Senhora de Nazaré", img: "./Assets/Images/2.png", nomes: ["Pastoral da Catequese", "Pastoral do Batismo", "Crianças", "Pastoral da Juventude"] },
             { data: "04/05", dia_semana: "Segunda-feira", titulo: "Nossa Senhora do Desterro", img: "./Assets/Images/3.png", nomes: ["Denílson Pereira Barbalho e família", "José Carlos da Rocha e família", "Orlando Augusto de Lima e família", "Maria de Lourdes da Silva e família"] },
@@ -321,7 +345,7 @@
             { data: "23/05", dia_semana: "Sábado", titulo: "Nossa Senhora da Saúde", img: "./Assets/Images/22.jpg", nomes: ["Marlene da Silva de Souza e família", "Aureliano de Souza e família", "José Aureliano de Souza e família", "Valdeci Constantino de Souza e família", "José Edilson da Silva e família", "José Alfredo de Souza e família", "Fabio Duarte e família", "Ivo e família", "Ailton Torres e família", "Francisco Pereira e família", "Leonel Batista e família", "Lucivaldo Batista e família"] },
             { data: "24/05", dia_semana: "Domingo", titulo: "Nossa Senhora Auxiliadora", img: "./Assets/Images/23.jpg", nomes: ["Terço dos Homens", "Legião de Maria", "Apostolado da Oração"] },
             { data: "25/05", dia_semana: "Segunda-feira", titulo: "Nossa Senhora Rainha da Paz", img: "./Assets/Images/24.jpg", nomes: ["Maria Estela dos Santos Sobrinho e família", "Kléber Magnus dos Santos Sobrinho e família", "Luiz Pedro Júnior e família", "Maria dos Prazeres dos Santos Pontes e família", "Francimário Santos Pontes e família", "João Gomes de Melo", "Eduardo José Gomes e família", "Erivan Gomes de Melo e família", "Luiz Gomes Neto e família", "Dérik Luiz Gomes e família", "Diego Neuber Gomes e família", "Wendell Maia e família"] },
-            { data: "26/05", dia_semana: "Terça-feira", titulo: "Nossa Senhora do Bom Conselho", img: "./Assets/Images/25.jpg", nomes: ["Prefeitura Municipal de Serrinha", "Câmara de Vereadores de Serrinha"] },
+            { data: "26/05", dia_semana: "Terça-feira", titulo: "Nossa Senhora do Bom Conselho", img: "./Assets/Images/25.jpg", nomes: ["Prefeitura Municipal de Serrinha e funcionários", "Câmara de Vereadores de Serrinha e funcionários"] },
             { data: "27/05", dia_semana: "Quarta-feira", titulo: "Nossa Senhora das Graças", img: "./Assets/Images/26.jpg", nomes: ["Maria França de Oliveira e família", "Marlene Paulo de Lima e família", "Antônio Felix de Oliveira e família", "Antônio Vicente Fernandes e família", "Valdir da Silva Fernandes e família", "Francisco Josiemerson e família", "Jorge Luis Santos Oliveira e família", "Sebastião Moisés de Oliveira e família"] },
             { data: "28/05", dia_semana: "Quinta-feira", titulo: "Nossa Senhora do Livramento", img: "./Assets/Images/27.jpg", nomes: ["João Batista de Lima e família", "José Armando de Lima e família", "Maria da Conceição Lopes e família", "José Rodrigues dos Santos e família", "José de Oliveira da Silva e família"] },
             { data: "29/05", dia_semana: "Sexta-feira", titulo: "Visitação de Nossa Senhora", img: "./Assets/Images/28.jpg", nomes: ["Maria Cordeiro da Silva", "Eduardo da Silva Monteiro", "Aluízio Cordeiro da Silva", "Rosário Cordeiro da Silva", "Ana Paula Cordeiro da Silva", "Arlindo Cordeiro da Silva", "Zulinha"] },
@@ -384,6 +408,66 @@
             header.classList.toggle('header-shrink', isShrunk);
             searchContainer.classList.toggle('search-shrink', isShrunk);
             searchContainer.style.top = `${header.offsetHeight + 8}px`;
+        }
+
+        function printSchedule() {
+            const win = window.open('', '_blank', 'width=800,height=600');
+            const rows = programacao.map(dia => `
+                <tr class="${dia.titulo === 'Abertura' || dia.titulo === 'Encerramento' ? 'special-row' : ''}" style="break-inside: avoid; page-break-inside: avoid;">
+                    <td class="col-data">${dia.data}<br><span class="dia-semana">${dia.dia_semana}</span></td>
+                    <td class="col-titulo">${dia.titulo}</td>
+                    <td class="col-nomes">${dia.nomes.join('<br>')}</td>
+                </tr>
+            `).join('');
+
+            win.document.write(`
+                <!DOCTYPE html>
+                <html lang="pt-br">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Programação – Mês Mariano 2026</title>
+                    <style>
+                        body { font-family: 'Segoe UI', sans-serif; margin: 30px; color: #222; }
+                        h1 { text-align: center; color: #1a5f7a; margin-bottom: 4px; font-size: 1.6rem; }
+                        .subtitle { text-align: center; color: #555; margin-bottom: 20px; font-size: 0.95rem; }
+                        table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+                        thead tr { background: #1a5f7a; color: white; }
+                        thead th { padding: 10px 12px; text-align: left; }
+                        tbody tr { border-bottom: 1px solid #ddd; }
+                        tbody tr:nth-child(even) { background: #f0f7ff; }
+                        tbody tr.special-row { background: #1a5f7a; color: white; font-weight: bold; }
+                        td { padding: 8px 12px; vertical-align: top; }
+                        .col-data { width: 110px; font-weight: bold; white-space: nowrap; }
+                        .col-titulo { width: 200px; }
+                        .col-nomes { line-height: 1.7; }
+                        .dia-semana { font-weight: normal; font-size: 0.82rem; color: #666; }
+                        .special-row .dia-semana { color: #cce; }
+                        footer { text-align: center; margin-top: 20px; font-size: 0.78rem; color: #888; }
+                        @media print {
+                            body { margin: 15mm 15mm; }
+                            button { display: none; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Mês Mariano 2026</h1>
+                    <p class="subtitle">Paróquia Nossa Senhora da Conceição – Serrinha/RN</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Invocação</th>
+                                <th>Responsáveis</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                    <footer>Programação sujeita a alterações.</footer>
+                    <script>window.onload = function(){ window.print(); }<\/script>
+                </body>
+                </html>
+            `);
+            win.document.close();
         }
 
         render();
